@@ -39,6 +39,11 @@ It does **not** provide diagnosis, treatment, or clinical assessment.
    ```bash
    make test
    ```
+7. Run migrations and seed demo data:
+   ```bash
+   make migrate
+   make seed
+   ```
 
 ## Quickstart (Docker Compose)
 

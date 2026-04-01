@@ -24,11 +24,13 @@ def render_page() -> None:
     )
 
     st.subheader("MVP Demo Memory")
-    st.write({
-        "memory_id": record.memory_id,
-        "title": record.title,
-        "narrative": record.narrative,
-    })
+    st.write(
+        {
+            "memory_id": record.memory_id,
+            "title": record.title,
+            "narrative": record.narrative,
+        }
+    )
 
 
 if __name__ == "__main__":

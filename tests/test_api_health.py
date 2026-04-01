@@ -1,12 +1,5 @@
-from fastapi.testclient import TestClient
-
-from apps.api.main import app
-
-
-def test_health_endpoint_returns_ok() -> None:
-    client = TestClient(app)
-
-    response = client.get("/health")
+def test_health_endpoint_returns_ok(api_client) -> None:
+    response = api_client.get("/health")
 
     assert response.status_code == 200
     payload = response.json()
@@ -14,10 +7,8 @@ def test_health_endpoint_returns_ok() -> None:
     assert "timestamp_utc" in payload
 
 
-def test_demo_memory_endpoint_returns_payload() -> None:
-    client = TestClient(app)
-
-    response = client.get("/memory/demo")
+def test_demo_memory_endpoint_returns_payload(api_client) -> None:
+    response = api_client.get("/memory/demo")
 
     assert response.status_code == 200
     payload = response.json()

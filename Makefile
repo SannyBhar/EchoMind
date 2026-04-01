@@ -1,4 +1,4 @@
-.PHONY: install dev-api dev-dashboard dev-worker lint format test up down
+.PHONY: install dev-api dev-dashboard dev-worker lint format test migrate seed up down
 
 install:
 	pip install -e .[dev]
@@ -20,6 +20,12 @@ format:
 
 test:
 	pytest
+
+migrate:
+	alembic upgrade head
+
+seed:
+	python -m scripts.seed_demo_data
 
 up:
 	docker compose up --build
