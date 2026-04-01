@@ -1,4 +1,4 @@
-# EchoMind / Remembra MVP Scaffold
+# EchoMind MVP Scaffold
 
 Remembra is a **non-clinical, research-only** platform for generating and comparing personalized multimodal memory cues using TRIBE v2 as a simulation and evaluation layer.
 
