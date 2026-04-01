@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling>=1.24.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "remembra"
+version = "0.1.0"
+description = "Non-clinical in-silico memory cue generation and ranking platform scaffold"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "EchoMind Team" }
+]
+dependencies = [
+  "fastapi>=0.116.0,<1.0.0",
+  "uvicorn[standard]>=0.35.0,<1.0.0",
+  "streamlit>=1.44.0,<2.0.0",
+  "sqlalchemy>=2.0.40,<3.0.0",
+  "psycopg[binary]>=3.2.7,<4.0.0",
+  "redis>=6.0.0,<7.0.0",
+  "celery>=5.4.0,<6.0.0",
+  "pydantic>=2.11.0,<3.0.0",
+  "pydantic-settings>=2.8.0,<3.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.5,<9.0.0",
+  "httpx>=0.28.1,<1.0.0",
+  "ruff>=0.11.5,<1.0.0",
+  "pre-commit>=4.2.0,<5.0.0"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["remembra", "apps"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "N", "W"]
+ignore = ["B008"]

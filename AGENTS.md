@@ -1,6 +1,6 @@
 # AGENTS.md
 
-## Project: EchoMind
+## Project: Remembra
 
 Remembra is a research-grade, non-clinical platform for generating and comparing personalized multimodal memory cues using TRIBE v2 as a brain-response simulation and evaluation layer.
 
