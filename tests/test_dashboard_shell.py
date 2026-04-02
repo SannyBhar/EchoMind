@@ -4,7 +4,7 @@ from apps.dashboard.app import dashboard_title, render_page
 
 
 def test_dashboard_title_is_stable() -> None:
-    assert dashboard_title() == "Remembra Dashboard"
+    assert dashboard_title() == "EchoMind Dashboard"
 
 
 def test_render_page_runs_without_streamlit_server() -> None:

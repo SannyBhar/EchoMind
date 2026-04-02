@@ -7,8 +7,8 @@ from dataclasses import dataclass
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
-from remembra.db.models import Asset, Memory, Person, Place
-from remembra.db.schemas import AssetCreate, MemoryCreate, PersonCreate, PlaceCreate
+from echomind.db.models import Asset, Memory, Person, Place
+from echomind.db.schemas import AssetCreate, MemoryCreate, PersonCreate, PlaceCreate
 
 
 @dataclass(slots=True)

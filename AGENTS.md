@@ -1,8 +1,8 @@
 # AGENTS.md
 
-## Project: Remembra
+## Project: EchoMind
 
-Remembra is a research-grade, non-clinical platform for generating and comparing personalized multimodal memory cues using TRIBE v2 as a brain-response simulation and evaluation layer.
+EchoMind is a research-grade, non-clinical platform for generating and comparing personalized multimodal memory cues using TRIBE v2 as a brain-response simulation and evaluation layer.
 
 This repository must remain rigorously scoped:
 - It is NOT a diagnostic tool.
@@ -76,15 +76,15 @@ Avoid:
 - `apps/api/` for FastAPI app entrypoint
 - `apps/dashboard/` for Streamlit app
 - `apps/worker/` for background worker entrypoint
-- `remembra/core/` for settings, logging, enums, utilities
-- `remembra/db/` for database base/session/models/schemas
-- `remembra/memory/` for autobiographical entities and services
-- `remembra/cues/` for cue planning and generation
-- `remembra/media/` for rendering helpers
-- `remembra/tribe/` for TRIBE integration wrapper
-- `remembra/scoring/` for metrics and composite scoring
-- `remembra/experiments/` for experiment definitions and runners
-- `remembra/api/` for API routes and dependencies
+- `echomind/core/` for settings, logging, enums, utilities
+- `echomind/db/` for database base/session/models/schemas
+- `echomind/memory/` for autobiographical entities and services
+- `echomind/cues/` for cue planning and generation
+- `echomind/media/` for rendering helpers
+- `echomind/tribe/` for TRIBE integration wrapper
+- `echomind/scoring/` for metrics and composite scoring
+- `echomind/experiments/` for experiment definitions and runners
+- `echomind/api/` for API routes and dependencies
 - `configs/` for app, scoring, and experiment configs
 - `tests/` for unit/integration/e2e tests
 - `docs/` for architecture, ethics, roadmap, and experiment specs

@@ -1,4 +1,4 @@
-"""Database-backed enums for Remembra persistence contracts."""
+"""Database-backed enums for EchoMind persistence contracts."""
 
 from enum import StrEnum
 

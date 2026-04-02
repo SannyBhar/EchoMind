@@ -3,10 +3,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from remembra.api.dependencies import db_session_dependency
-from remembra.core.utils import utc_now_iso
-from remembra.db.schemas import MemoryRead
-from remembra.memory.service import get_memory, list_memories, load_demo_memory
+from echomind.api.dependencies import db_session_dependency
+from echomind.core.utils import utc_now_iso
+from echomind.db.schemas import MemoryRead
+from echomind.memory.service import get_memory, list_memories, load_demo_memory
 
 router = APIRouter()
 

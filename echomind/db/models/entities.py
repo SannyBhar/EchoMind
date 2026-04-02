@@ -22,8 +22,8 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from remembra.db.base import Base
-from remembra.db.enums import (
+from echomind.db.base import Base
+from echomind.db.enums import (
     AssetType,
     CueTone,
     CueType,

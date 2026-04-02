@@ -1,5 +1,5 @@
 """Database package exports."""
 
-from remembra.db import models
+from echomind.db import models
 
 __all__ = ["models"]

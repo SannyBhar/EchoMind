@@ -1,6 +1,6 @@
 """Pydantic schema exports."""
 
-from remembra.db.schemas.entities import (
+from echomind.db.schemas.entities import (
     AssetCreate,
     AssetRead,
     CueVariantCreate,

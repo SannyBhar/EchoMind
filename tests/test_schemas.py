@@ -1,7 +1,7 @@
-from remembra.cues.service import create_cue_variant
-from remembra.db.enums import AssetType, CueTone, CueType, MemoryType, PersonalizationLevel
-from remembra.db.schemas import AssetCreate, CueVariantCreate, MemoryCreate, MemoryRead, PlaceCreate
-from remembra.memory.service import create_asset, create_memory, create_place
+from echomind.cues.service import create_cue_variant
+from echomind.db.enums import AssetType, CueTone, CueType, MemoryType, PersonalizationLevel
+from echomind.db.schemas import AssetCreate, CueVariantCreate, MemoryCreate, MemoryRead, PlaceCreate
+from echomind.memory.service import create_asset, create_memory, create_place
 
 
 def test_memory_schema_serialization(db_session) -> None:

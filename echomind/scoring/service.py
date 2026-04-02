@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from sqlalchemy.orm import Session
 
-from remembra.db.models import ScoreOutput
-from remembra.db.schemas import ScoreOutputCreate
+from echomind.db.models import ScoreOutput
+from echomind.db.schemas import ScoreOutputCreate
 
 
 def create_score_output(session: Session, payload: ScoreOutputCreate) -> ScoreOutput:

@@ -9,9 +9,9 @@ from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from apps.api.main import app
-from remembra.api.dependencies import db_session_dependency
-from remembra.db import models  # noqa: F401
-from remembra.db.base import Base
+from echomind.api.dependencies import db_session_dependency
+from echomind.db import models  # noqa: F401
+from echomind.db.base import Base
 
 
 @pytest.fixture

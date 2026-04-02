@@ -4,17 +4,17 @@ from __future__ import annotations
 
 from sqlalchemy.orm import Session
 
-from remembra.cues.service import create_cue_variant
-from remembra.db.enums import AssetType, CueTone, CueType, MemoryType, PersonalizationLevel
-from remembra.db.schemas import (
+from echomind.cues.service import create_cue_variant
+from echomind.db.enums import AssetType, CueTone, CueType, MemoryType, PersonalizationLevel
+from echomind.db.schemas import (
     AssetCreate,
     CueVariantCreate,
     MemoryCreate,
     PersonCreate,
     PlaceCreate,
 )
-from remembra.db.session import SessionLocal, session_scope
-from remembra.memory.service import (
+from echomind.db.session import SessionLocal, session_scope
+from echomind.memory.service import (
     add_person_to_memory,
     create_asset,
     create_memory,

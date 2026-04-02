@@ -1,12 +1,12 @@
-"""FastAPI entrypoint for Remembra."""
+"""FastAPI entrypoint for EchoMind."""
 
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from remembra.api.routes import router
-from remembra.core.logging import configure_logging
-from remembra.core.settings import get_settings
+from echomind.api.routes import router
+from echomind.core.logging import configure_logging
+from echomind.core.settings import get_settings
 
 
 @asynccontextmanager
@@ -22,7 +22,7 @@ def create_app() -> FastAPI:
     """Application factory for API service."""
 
     app = FastAPI(
-        title="Remembra API",
+        title="EchoMind API",
         description="Non-clinical in-silico memory cue research backend.",
         version="0.1.0",
         lifespan=lifespan,

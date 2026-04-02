@@ -1,14 +1,14 @@
-"""Streamlit dashboard shell for Remembra."""
+"""Streamlit dashboard shell for EchoMind."""
 
 import streamlit as st
 
-from remembra.memory.service import load_demo_memory
+from echomind.memory.service import load_demo_memory
 
 
 def dashboard_title() -> str:
     """Return dashboard title for smoke tests and page rendering."""
 
-    return "Remembra Dashboard"
+    return "EchoMind Dashboard"
 
 
 def render_page() -> None:

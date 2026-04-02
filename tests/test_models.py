@@ -1,5 +1,5 @@
-from remembra.cues.service import create_cue_variant, create_inference_run
-from remembra.db.enums import (
+from echomind.cues.service import create_cue_variant, create_inference_run
+from echomind.db.enums import (
     AssetType,
     CueTone,
     CueType,
@@ -7,8 +7,8 @@ from remembra.db.enums import (
     MemoryType,
     PersonalizationLevel,
 )
-from remembra.db.models import ScoreOutput
-from remembra.db.schemas import (
+from echomind.db.models import ScoreOutput
+from echomind.db.schemas import (
     AssetCreate,
     CueVariantCreate,
     InferenceRunCreate,
@@ -17,7 +17,7 @@ from remembra.db.schemas import (
     PlaceCreate,
     ScoreOutputCreate,
 )
-from remembra.memory.service import (
+from echomind.memory.service import (
     add_person_to_memory,
     create_asset,
     create_memory,
@@ -25,7 +25,7 @@ from remembra.memory.service import (
     create_place,
     get_memory,
 )
-from remembra.scoring.service import create_score_output
+from echomind.scoring.service import create_score_output
 
 
 def test_model_creation_and_relationships(db_session) -> None:

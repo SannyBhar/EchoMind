@@ -1,6 +1,6 @@
 from sqlalchemy import select
 
-from remembra.db.models import Asset, CueVariant, Memory, Person, Place
+from echomind.db.models import Asset, CueVariant, Memory, Person, Place
 from scripts.seed_demo_data import seed_demo_data
 
 

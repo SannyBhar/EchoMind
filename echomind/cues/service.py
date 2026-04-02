@@ -5,8 +5,8 @@ from __future__ import annotations
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from remembra.db.models import CueVariant, InferenceRun
-from remembra.db.schemas import CueVariantCreate, InferenceRunCreate
+from echomind.db.models import CueVariant, InferenceRun
+from echomind.db.schemas import CueVariantCreate, InferenceRunCreate
 
 
 def create_cue_variant(session: Session, payload: CueVariantCreate) -> CueVariant:

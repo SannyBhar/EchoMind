@@ -6,7 +6,7 @@ from datetime import date, datetime
 
 from pydantic import BaseModel, ConfigDict
 
-from remembra.db.enums import (
+from echomind.db.enums import (
     AssetType,
     CueTone,
     CueType,

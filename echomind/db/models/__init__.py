@@ -1,6 +1,6 @@
 """SQLAlchemy model exports."""
 
-from remembra.db.models.entities import (
+from echomind.db.models.entities import (
     Asset,
     CueVariant,
     InferenceRun,

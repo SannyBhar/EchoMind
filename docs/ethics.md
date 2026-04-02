@@ -1,6 +1,6 @@
 # Ethics and Non-Clinical Limitations (Stub)
 
-Remembra is a research platform for simulation-based comparison of candidate cues.
+EchoMind is a research platform for simulation-based comparison of candidate cues.
 
 ## Constraints
 

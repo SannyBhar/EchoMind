@@ -3,7 +3,7 @@ requires = ["hatchling>=1.24.0"]
 build-backend = "hatchling.build"
 
 [project]
-name = "remembra"
+name = "echomind"
 version = "0.1.0"
 description = "Non-clinical in-silico memory cue generation and ranking platform scaffold"
 readme = "README.md"
@@ -33,7 +33,7 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["remembra", "apps"]
+packages = ["echomind", "apps"]
 
 [tool.pytest.ini_options]
 addopts = "-q"

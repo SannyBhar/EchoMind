@@ -2,7 +2,7 @@
 
 from celery import Celery
 
-from remembra.core.settings import get_settings
+from echomind.core.settings import get_settings
 
 
 def create_celery_app() -> Celery:
@@ -10,7 +10,7 @@ def create_celery_app() -> Celery:
 
     settings = get_settings()
     app = Celery(
-        "remembra",
+        "echomind",
         broker=settings.celery_broker_url,
         backend=settings.celery_result_backend,
     )

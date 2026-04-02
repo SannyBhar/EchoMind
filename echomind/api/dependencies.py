@@ -4,7 +4,7 @@ from collections.abc import Generator
 
 from sqlalchemy.orm import Session
 
-from remembra.db.session import get_db_session
+from echomind.db.session import get_db_session
 
 
 def db_session_dependency() -> Generator[Session, None, None]:

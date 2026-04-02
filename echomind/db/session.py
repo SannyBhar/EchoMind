@@ -8,7 +8,7 @@ from contextlib import contextmanager
 from sqlalchemy import Engine, create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
-from remembra.core.settings import get_settings
+from echomind.core.settings import get_settings
 
 
 def build_engine(database_url: str | None = None) -> Engine:

@@ -9,14 +9,14 @@ This document will define the modular architecture for in-silico cue generation,
 - `apps/api`: HTTP entrypoint and route wiring
 - `apps/dashboard`: Streamlit shell for experiment inspection
 - `apps/worker`: Celery worker entrypoint
-- `remembra/core`: settings, logging, enums, shared utilities
-- `remembra/db`: DB base/session and model/schema namespaces
-- `remembra/memory`: autobiographical memory domain interfaces
-- `remembra/cues`: cue planning/generation interfaces
-- `remembra/media`: multimodal rendering interfaces
-- `remembra/tribe`: TRIBE integration wrapper interfaces
-- `remembra/scoring`: interpretable scoring interfaces
-- `remembra/experiments`: experiment orchestration interfaces
+- `echomind/core`: settings, logging, enums, shared utilities
+- `echomind/db`: DB base/session and model/schema namespaces
+- `echomind/memory`: autobiographical memory domain interfaces
+- `echomind/cues`: cue planning/generation interfaces
+- `echomind/media`: multimodal rendering interfaces
+- `echomind/tribe`: TRIBE integration wrapper interfaces
+- `echomind/scoring`: interpretable scoring interfaces
+- `echomind/experiments`: experiment orchestration interfaces
 
 ## Notes
 

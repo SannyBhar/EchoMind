@@ -7,9 +7,9 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from remembra.core.settings import get_settings
-from remembra.db import models  # noqa: F401
-from remembra.db.base import Base
+from echomind.core.settings import get_settings
+from echomind.db import models  # noqa: F401
+from echomind.db.base import Base
 
 config = context.config
 
