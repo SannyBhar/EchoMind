@@ -1,9 +1,14 @@
+import pytest
+from pydantic import ValidationError
+
 from echomind.cues.contracts import (
     CueDeliveryMode,
     CueGenerationRequest,
+    CueMetadataKey,
     CueVariantSpec,
     InferenceRequest,
     InferenceResultSummary,
+    InferenceStatus,
     RenderedStimulus,
     StimulusManifest,
 )
@@ -48,12 +53,12 @@ def test_schema_serialization_round_trip() -> None:
         cue_id="cue-001",
         delivery_mode=CueDeliveryMode.NARRATION,
         narration_transcript="Narration transcript",
-        narration_audio_uri="memory://audio/cue-001.wav",
     )
     manifest = StimulusManifest(
         manifest_id="manifest-001",
         memory_id="demo-memory-001",
         stimuli=[stimulus],
+        metadata={CueMetadataKey.PLANNING_VERSION.value: "mvp.v1"},
     )
     request = InferenceRequest(
         request_id="inference-001",
@@ -66,6 +71,32 @@ def test_schema_serialization_round_trip() -> None:
 
     assert restored.request_id == "inference-001"
     assert restored.stimulus_manifest.stimuli[0].cue_id == "cue-001"
+
+
+def test_rendered_stimulus_narration_validation_rules() -> None:
+    with pytest.raises(ValidationError):
+        RenderedStimulus(
+            stimulus_id="stim-bad",
+            cue_id="cue-bad",
+            delivery_mode=CueDeliveryMode.NARRATION,
+        )
+
+    with pytest.raises(ValidationError):
+        RenderedStimulus(
+            stimulus_id="slide-bad",
+            cue_id="cue-slide-bad",
+            delivery_mode=CueDeliveryMode.SLIDESHOW_NARRATION,
+            slide_image_uris=["memory://slides/1.png"],
+        )
+
+    valid = RenderedStimulus(
+        stimulus_id="slide-good",
+        cue_id="cue-slide-good",
+        delivery_mode=CueDeliveryMode.SLIDESHOW_NARRATION,
+        narration_audio_uri="memory://audio/cue-slide-good.wav",
+        slide_image_uris=["memory://slides/1.png"],
+    )
+    assert valid.narration_audio_uri is not None
 
 
 def test_placeholder_inference_summary_contract() -> None:
@@ -82,5 +113,5 @@ def test_placeholder_inference_summary_contract() -> None:
     summary = summarize_placeholder_inference(request)
 
     assert isinstance(summary, InferenceResultSummary)
-    assert summary.status == "pending"
+    assert summary.status == InferenceStatus.PENDING
     assert summary.ranked_cue_ids == ["cue-xyz"]

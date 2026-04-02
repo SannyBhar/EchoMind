@@ -5,9 +5,11 @@ from __future__ import annotations
 from echomind.cues.contracts import (
     CueDeliveryMode,
     CueGenerationRequest,
+    CueMetadataKey,
     CueVariantSpec,
     InferenceRequest,
     InferenceResultSummary,
+    InferenceStatus,
     RenderedStimulus,
     StimulusManifest,
 )
@@ -31,6 +33,14 @@ def plan_cue_variants(request: CueGenerationRequest) -> list[CueVariantSpec]:
                     tone="neutral",
                     personalization_level="medium",
                     script_text=base_text,
+                    metadata={
+                        CueMetadataKey.VARIANT_FAMILY.value: "placeholder",
+                        CueMetadataKey.TEMPLATE_VERSION.value: "placeholder.v1",
+                        CueMetadataKey.SEED.value: request.seed,
+                        CueMetadataKey.PLANNING_VERSION.value: request.planning_version,
+                        CueMetadataKey.PEOPLE_USED.value: [],
+                        CueMetadataKey.PLACE_USED.value: None,
+                    },
                 )
             )
         elif mode == CueDeliveryMode.NARRATION:
@@ -43,6 +53,14 @@ def plan_cue_variants(request: CueGenerationRequest) -> list[CueVariantSpec]:
                     personalization_level="high",
                     script_text=base_text,
                     narration_text=f"Narrate: {base_text}",
+                    metadata={
+                        CueMetadataKey.VARIANT_FAMILY.value: "placeholder",
+                        CueMetadataKey.TEMPLATE_VERSION.value: "placeholder.v1",
+                        CueMetadataKey.SEED.value: request.seed,
+                        CueMetadataKey.PLANNING_VERSION.value: request.planning_version,
+                        CueMetadataKey.PEOPLE_USED.value: [],
+                        CueMetadataKey.PLACE_USED.value: None,
+                    },
                 )
             )
         else:
@@ -60,6 +78,14 @@ def plan_cue_variants(request: CueGenerationRequest) -> list[CueVariantSpec]:
                         "key people and place frame",
                         "closing reflection frame",
                     ],
+                    metadata={
+                        CueMetadataKey.VARIANT_FAMILY.value: "placeholder",
+                        CueMetadataKey.TEMPLATE_VERSION.value: "placeholder.v1",
+                        CueMetadataKey.SEED.value: request.seed,
+                        CueMetadataKey.PLANNING_VERSION.value: request.planning_version,
+                        CueMetadataKey.PEOPLE_USED.value: [],
+                        CueMetadataKey.PLACE_USED.value: None,
+                    },
                 )
             )
 
@@ -130,7 +156,7 @@ def summarize_placeholder_inference(request: InferenceRequest) -> InferenceResul
     return InferenceResultSummary(
         request_id=request.request_id,
         engine_name=request.engine_name,
-        status="pending",
+        status=InferenceStatus.PENDING,
         ranked_cue_ids=ranked_cues,
         aggregate_scores={},
         notes="Placeholder summary for in-silico pipeline wiring.",
