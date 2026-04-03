@@ -8,5 +8,6 @@ __pycache__/
 .env
 .DS_Store
 .streamlit/
+artifacts/
 coverage.xml
 htmlcov/

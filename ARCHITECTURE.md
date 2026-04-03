@@ -12,7 +12,8 @@
 - `echomind/cues`: cue contracts, deterministic planner, cue persistence service
 - `echomind/media`: rendering contracts, deterministic renderer, swappable adapters (TTS/slideshow)
 - `echomind/tribe`: preprocessing, wrapper client, inference orchestration, aggregates, artifact persistence
-- `echomind/scoring`: score persistence service and scoring interface placeholders
+- `echomind/scoring`: explicit metrics, weighted composite assembly, explanation helpers, scoring pipeline
+- `echomind/experiments`: grouped comparison outputs, report assembly, deterministic demo comparison runner
 
 ### Current Data Flow
 1. Memory context is loaded from persisted entities (`Memory`, `Person`, `Place`, `Asset`).
@@ -22,7 +23,8 @@
 5. TRIBE preprocess layer maps stimuli to `TribeBatchInput` (text-first smoke path currently).
 6. TRIBE client wrapper runs batch inference (stub by default) and emits raw outputs.
 7. Raw outputs + summary + run metadata are persisted to deterministic local artifact paths.
-8. Future scoring layer will consume persisted inference outputs.
+8. Scoring layer computes response_strength + heuristic modality/personalization factors + composite score.
+9. Experiment layer groups ranked cues by personalization, tone, and delivery mode for comparison views.
 
 ## Persistence Layer
 - SQLAlchemy 2.0 models for memory/cue/inference/score entities
@@ -39,7 +41,8 @@
 - Planner boundary: `CueGenerationRequest` -> `CueVariantSpec`
 - Renderer boundary: `CueVariantSpec` -> `RenderedStimulus` / `StimulusManifest`
 - Inference boundary: `StimulusManifest` -> `TribeBatchInput` -> raw outputs + `InferenceResultSummary`
-- Scoring boundary (future): inference outputs -> score summaries + persistence
+- Scoring boundary: inference outputs + cue metadata -> decomposable cue scores
+- Experiment boundary: scored cues -> grouped experiment comparison report
 
 ## Architecture Decisions
 1. Deterministic planning before LLM generation:
@@ -54,8 +57,11 @@
 4. Non-clinical framing is enforced system-wide:
 - design, docs, and service behavior avoid diagnostic/treatment claims.
 
+5. Heuristic factors are explicit and separated from model-derived signals:
+- modality and personalization contributions are labeled as heuristic metadata factors.
+
 ## Known Extensions
 - replace stub TRIBE client with environment-backed real client implementation
 - expand preprocess support for narration/slideshow modalities
-- add interpretable scoring computation over simulation outputs
-- add experiment orchestration and richer dashboard result views
+- persist scoring outputs to DB-linked score records at run time
+- add richer dashboard result views and product-facing comparison APIs

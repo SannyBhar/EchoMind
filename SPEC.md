@@ -15,6 +15,8 @@ EchoMind currently supports:
 - deterministic cue planning contracts and planner logic
 - deterministic media rendering contracts and rendering stubs
 - TRIBE integration wrapper boundary with deterministic smoke-test execution path
+- transparent scoring submetrics and weighted composite ranking outputs
+- grouped experiment comparisons (personalization, tone, delivery mode)
 - simulation request/result summary contracts with persisted inference artifacts
 - persistence scaffolding, migrations, seed data, API read endpoints, and dashboard shell
 
@@ -35,7 +37,7 @@ Produce reproducible candidate cue sets and rendered stimuli that can be evaluat
 ## Scientific Limitations
 - current TRIBE execution uses a deterministic stub client by default
 - first smoke path supports text-first preprocessing for reliability
-- no scoring formulas are implemented yet
+- current scoring includes explicit heuristic factors for modality and personalization
 - no human outcome validation loop in current MVP
 
 ## Ethical Framing
@@ -47,7 +49,9 @@ MVP includes deterministic end-to-end preparation from memory context to planned
 - deterministic cue planner emits validated cue variants
 - deterministic media renderer emits validated rendered stimuli and local artifacts
 - TRIBE integration path preprocesses stimuli, runs wrapper inference, persists raw outputs and summaries
-- contracts enforce mode/state invariants for downstream scoring integration
+- scoring layer emits decomposable metrics and weighted composite scores
+- experiment layer summarizes ranked outputs across personalization/tone/modality slices
+- contracts enforce mode/state invariants across pipeline boundaries
 
 ## Completed Milestones
 - M1: repository scaffold and service shells
@@ -56,6 +60,8 @@ MVP includes deterministic end-to-end preparation from memory context to planned
 - M4: deterministic cue planner with traceability metadata
 - M5: deterministic media rendering layer (text, narration, slideshow+narration) with tests
 - M6: TRIBE integration wrapper + first end-to-end text smoke inference path with saved artifacts
+- M7: scoring + experiment comparison layer with deterministic demo report outputs
+- M7.1: manual validation checklist captured in `MANUAL_TESTS.md`
 
 ## Immediate Next Milestone
-M7: scoring and experiment-level integration on top of persisted TRIBE run artifacts.
+M8: dashboard enrichment and product-facing experience APIs for viewing cue rankings and experiment slices.
