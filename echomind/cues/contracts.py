@@ -186,5 +186,6 @@ class InferenceResultSummary(BaseModel):
     status: InferenceStatus
     ranked_cue_ids: list[str] = Field(default_factory=list)
     aggregate_scores: dict[str, float] = Field(default_factory=dict)
+    summary_metadata: dict[str, Any] = Field(default_factory=dict)
     notes: str | None = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))

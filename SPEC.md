@@ -14,11 +14,12 @@ EchoMind currently supports:
 - autobiographical memory records and related entities (people/place/assets)
 - deterministic cue planning contracts and planner logic
 - deterministic media rendering contracts and rendering stubs
-- simulation request/result summary contracts
+- TRIBE integration wrapper boundary with deterministic smoke-test execution path
+- simulation request/result summary contracts with persisted inference artifacts
 - persistence scaffolding, migrations, seed data, API read endpoints, and dashboard shell
 
 ## Research Objective
-Produce reproducible candidate cue sets and rendered stimuli that can later be evaluated via TRIBE wrappers and transparent scoring.
+Produce reproducible candidate cue sets and rendered stimuli that can be evaluated via TRIBE wrappers and later transparent scoring.
 
 ## Working Hypotheses
 1. deterministic cue families provide stable baselines for simulation comparison
@@ -32,20 +33,21 @@ Produce reproducible candidate cue sets and rendered stimuli that can later be e
 - autonomous LLM-based cue generation in MVP
 
 ## Scientific Limitations
-- current rendering layer uses deterministic stubs for audio/video artifacts
-- no TRIBE simulation execution yet in the media layer
-- no scoring formulas applied to rendered stimuli yet
+- current TRIBE execution uses a deterministic stub client by default
+- first smoke path supports text-first preprocessing for reliability
+- no scoring formulas are implemented yet
 - no human outcome validation loop in current MVP
 
 ## Ethical Framing
 The system must remain explicit about non-clinical use and avoid overclaiming scientific capability beyond implemented behavior.
 
 ## Current MVP Definition
-MVP includes deterministic end-to-end preparation from memory context to planned cues and rendered-stimulus manifests:
+MVP includes deterministic end-to-end preparation from memory context to planned cues, rendered stimuli, and simulation wrapper outputs:
 - memory + assets persisted and retrievable
 - deterministic cue planner emits validated cue variants
 - deterministic media renderer emits validated rendered stimuli and local artifacts
-- contracts enforce mode/state invariants for downstream inference integration
+- TRIBE integration path preprocesses stimuli, runs wrapper inference, persists raw outputs and summaries
+- contracts enforce mode/state invariants for downstream scoring integration
 
 ## Completed Milestones
 - M1: repository scaffold and service shells
@@ -53,6 +55,7 @@ MVP includes deterministic end-to-end preparation from memory context to planned
 - M3: package rename to EchoMind and contract baseline
 - M4: deterministic cue planner with traceability metadata
 - M5: deterministic media rendering layer (text, narration, slideshow+narration) with tests
+- M6: TRIBE integration wrapper + first end-to-end text smoke inference path with saved artifacts
 
 ## Immediate Next Milestone
-M6: TRIBE wrapper integration using `InferenceRequest` + `StimulusManifest` contracts and persisted `InferenceRun`/`ScoreOutput` wiring.
+M7: scoring and experiment-level integration on top of persisted TRIBE run artifacts.

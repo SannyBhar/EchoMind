@@ -1,21 +1,50 @@
-"""TRIBE wrapper interfaces and placeholder client."""
+"""TRIBE client interfaces and deterministic stub implementation."""
 
-from dataclasses import dataclass
+from __future__ import annotations
+
+import hashlib
+from typing import Protocol
+
+from pydantic import BaseModel, Field
+
+from echomind.tribe.preprocess import TribeStimulusInput
 
 
-@dataclass(slots=True)
-class TribeSimulationResult:
-    """Simulation output placeholder for predicted cortical response."""
+class TribeRawOutput(BaseModel):
+    """Raw simulation artifact emitted per stimulus."""
 
+    stimulus_id: str
     cue_id: str
     response_score: float
+    token_count: int
+    response_vector: list[float] = Field(default_factory=list)
 
 
-class TribeClient:
-    """Placeholder TRIBE wrapper; implementation added in later phases."""
+class TribeClient(Protocol):
+    """Wrapper boundary for TRIBE execution adapters."""
 
-    def simulate(self, cue_id: str) -> TribeSimulationResult:
-        """Run in-silico simulation for one cue candidate."""
+    def infer_batch(self, stimuli: list[TribeStimulusInput]) -> list[TribeRawOutput]:
+        """Run simulation inference for preprocessed stimulus inputs."""
 
-        # TODO: Replace with real TRIBE integration behind this boundary.
-        return TribeSimulationResult(cue_id=cue_id, response_score=0.0)
+
+class StubTribeClient:
+    """Deterministic stub used when real TRIBE runtime is unavailable."""
+
+    def infer_batch(self, stimuli: list[TribeStimulusInput]) -> list[TribeRawOutput]:
+        outputs: list[TribeRawOutput] = []
+
+        for stimulus in stimuli:
+            digest = hashlib.sha256(stimulus.text_input.encode("utf-8")).hexdigest()
+            score_seed = int(digest[:8], 16)
+            score = (score_seed % 10000) / 10000.0
+            outputs.append(
+                TribeRawOutput(
+                    stimulus_id=stimulus.stimulus_id,
+                    cue_id=stimulus.cue_id,
+                    response_score=score,
+                    token_count=len(stimulus.text_input.split()),
+                    response_vector=[round(score, 4), round((score + 0.137) % 1.0, 4)],
+                )
+            )
+
+        return outputs
