@@ -188,15 +188,26 @@ def render_demo_planner_outputs(artifact_root: str | Path = "artifacts/media") -
     )
 
 
-def _extract_image_uris(slide_image_prompts: list[str]) -> list[str]:
-    """Extract deterministic image URIs from planner prompts."""
+_URI_SCHEMES: tuple[str, ...] = ("s3://", "memory://", "https://", "http://", "file://")
 
-    prefix = "Use reference image: "
+
+def _extract_image_uris(slide_image_prompts: list[str]) -> list[str]:
+    """Extract image URIs from slide reference strings.
+
+    Accepts entries in either format:
+      "Slide N — <description> at <place>: <uri>"  (current planner format)
+      "Use reference image: <uri>"                  (legacy format)
+      "<uri>"                                       (bare URI)
+
+    URI is identified by scheme prefix; one URI is extracted per prompt entry.
+    Returns a deduplicated, stably sorted list.
+    """
     image_uris: list[str] = []
     for prompt in slide_image_prompts:
-        if prompt.startswith(prefix):
-            uri = prompt[len(prefix) :].strip()
-            if uri:
-                image_uris.append(uri)
+        for token in prompt.replace(",", " ").split():
+            clean = token.rstrip(".,;)]")
+            if clean.startswith(_URI_SCHEMES):
+                image_uris.append(clean)
+                break
     # Keep stable, deduplicated ordering.
     return sorted(dict.fromkeys(image_uris))

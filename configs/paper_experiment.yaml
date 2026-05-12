@@ -1,0 +1,100 @@
+# EchoMind CS439 paper-ready experiment configuration (frozen).
+# Mirror of echomind/experiments/paper_config.py for human readability.
+# Bump `version` whenever any field changes so the paper's reproducibility
+# claims remain valid.
+#
+# Non-clinical research configuration. All findings are simulation-only.
+
+version: paper.v1.0
+
+dataset:
+  name: echomind-demo-12
+  version: m9.1
+  memory_count: 12
+  source: echomind.demo_data.memories.DEMO_MEMORIES
+  categories_min: 6
+  notes: >
+    Synthetic, hand-authored memories spanning 10 life-event categories.
+    No real participant data. Each memory has a deterministic seed; some
+    carry multiple image URIs to exercise multi-slide rendering.
+
+cue_families:
+  template_version: deterministic.m2
+  families:
+    - text_generic
+    - text_autobiographical
+    - narration_neutral
+    - narration_warm
+    - slideshow_neutral
+    - slideshow_warm
+  notes: >
+    Six structurally distinct families derived from a deterministic,
+    template-driven planner. Generic strips people/place metadata;
+    autobiographical anchors second-person reconstruction. Warm uses
+    invitational framing; neutral uses recorded-description framing.
+    Slideshow narration is a separate text from plain narration.
+
+scoring_weights:
+  response_strength: 0.7
+  modality_factor: 0.15
+  personalization_factor: 0.15
+
+dimensions:
+  - key: warm_vs_neutral
+    groups: [warm, neutral]
+    confidence: strong
+    description: >
+      Compares warm/invitational vs neutral/factual narration framing across
+      the same cue scaffolding.
+    caveat: >
+      Cleanest signal in the current pipeline because both groups follow
+      identical scoring paths and the stub-TRIBE input text differs only in
+      the framing dimension being studied.
+
+  - key: personalized_vs_generic
+    groups: [personalized, generic]
+    confidence: exploratory
+    description: >
+      Compares cues with explicit people/place anchors against a generic
+      event-type baseline.
+    caveat: >
+      Generic cues currently score HIGHER on average. This is an artifact of
+      the deterministic stub TRIBE client (SHA256 of input text mapped to
+      [0,1]) interacting with shorter, less constrained generic prompts.
+      Reported as a contrast in inputs, not as evidence that generic cues
+      are preferable.
+
+  - key: delivery_mode
+    groups: [text_only, narration, slideshow_narration]
+    confidence: limited
+    description: >
+      Compares the three delivery modes the planner produces.
+    caveat: >
+      Only TEXT_ONLY cues actually traverse stub TRIBE today;
+      NARRATION and SLIDESHOW_NARRATION receive constant heuristic-only
+      scores via the text-first smoke path. This dimension is included for
+      completeness but should NOT be read as a modality preference result.
+
+inference:
+  engine: tribe-v2-stub
+  path: text-first smoke path (TEXT_ONLY only)
+  seed_strategy: per-memory deterministic seed embedded in DemoMemorySpec
+
+limitations:
+  - TRIBE is invoked through a deterministic stub client; no real model inference is performed.
+  - Only TEXT_ONLY reaches the stub; narration and slideshow scores are heuristic-only constants.
+  - Dataset is synthetic (12 hand-authored memories); no human outcome validation.
+  - Composite scores mix a stub-derived response strength with two heuristic factors; submetrics are always reported alongside the composite.
+  - Generic-vs-personalized magnitudes reflect stub-text variance, not a memory-recall claim.
+
+reproduce_command: >
+  python3.11 scripts/run_multi_memory_experiments.py
+  --artifact-root artifacts/experiments/multi_memory &&
+  python3.11 scripts/export_report_artifacts.py
+  --input artifacts/experiments/multi_memory
+  --output artifacts/report
+
+artifact_paths:
+  multi_memory_report_json: artifacts/experiments/multi_memory/aggregate/multi_memory_report.json
+  dimension_summary_csv: artifacts/experiments/multi_memory/aggregate/dimension_summary.csv
+  report_root: artifacts/report

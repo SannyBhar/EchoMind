@@ -6,8 +6,9 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from echomind.cues.contracts import CueDeliveryMode
-from echomind.experiments.models import ExperimentComparisonReport
-from echomind.experiments.reports import run_demo_experiment_comparison
+from echomind.demo_data.loader import load_demo_dataset
+from echomind.experiments.models import ExperimentComparisonReport, MultiMemoryExperimentReport
+from echomind.experiments.reports import run_demo_experiment_comparison, run_multi_memory_experiment
 
 
 @dataclass(slots=True)
@@ -16,6 +17,15 @@ class ExperimentConfig:
 
     experiment_id: str = "demo-experiment"
     artifact_root: str = "artifacts/experiments"
+    supported_modalities: set[CueDeliveryMode] | None = None
+
+
+@dataclass(slots=True)
+class MultiMemoryExperimentConfig:
+    """Config for a multi-memory experiment run across the demo dataset."""
+
+    run_id: str = "multi-memory-demo-run"
+    artifact_root: str = "artifacts/experiments/multi_memory"
     supported_modalities: set[CueDeliveryMode] | None = None
 
 
@@ -31,3 +41,18 @@ class ExperimentRunner:
         )
         report.experiment_id = config.experiment_id
         return report
+
+
+class MultiMemoryExperimentRunner:
+    """Run the deterministic pipeline across the full synthetic demo dataset."""
+
+    def run(self, config: MultiMemoryExperimentConfig) -> MultiMemoryExperimentReport:
+        """Run multi-memory experiment comparison and return aggregated report."""
+
+        dataset = load_demo_dataset()
+        return run_multi_memory_experiment(
+            dataset=dataset,
+            run_id=config.run_id,
+            artifact_root=config.artifact_root,
+            supported_modalities=config.supported_modalities,
+        )

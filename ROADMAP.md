@@ -9,20 +9,25 @@
 - M6: TRIBE integration wrapper and text-first end-to-end smoke inference path
 - M7: Transparent scoring + experiment comparison layer with deterministic report output
 - M7.1: Manual validation checklist codified in `MANUAL_TESTS.md`
+- M8: Minimal Streamlit experiment inspection dashboard over validated deterministic pipeline
+- M9: Reproducible 12-memory synthetic demo dataset + multi-memory experiment runner with per-memory and aggregated outputs (JSON + CSV)
+- M9.1: Stronger cue semantic separation (generic vs autobiographical, warm vs neutral, slideshow scene references); dataset quality improvements; semantic regression tests
+- M9.2: Frozen `paper.v1.0` experiment configuration, report-export script (CSVs + simple plots), and CS439 paper outline / report-artifact docs
 
 ## Current Milestone
-- M8: dashboard enrichment and product-facing experience APIs over existing pipeline artifacts
+- M10: product-facing experience APIs and richer dashboard filtering/report navigation over existing pipeline artifacts
 
 ## Next 3 Milestones
-1. M8.1: dashboard comparison views and API read models
-- expose ranked cues and grouped experiment summaries via stable API contracts
-- add dashboard sections for run artifacts and score breakdowns
+1. M10.1: dashboard filtering + report navigation
+- add run-history inspection and comparison report selection
+- add lightweight filters for modality/tone/personalization slices
+- optionally surface multi-memory aggregated dimension charts
 
-2. M9: TRIBE execution backend upgrade
+2. M11: TRIBE execution backend upgrade
 - add environment-backed TRIBE client implementation
 - retain stub fallback for deterministic/local test execution
 
-3. M10: persistence hardening for scoring + experiment outputs
+3. M12: persistence hardening for scoring + experiment outputs
 - store score breakdowns and experiment summaries as first-class persisted records
 - link DB records to deterministic artifact manifests for auditability
 

@@ -35,3 +35,49 @@ class ExperimentComparisonReport(BaseModel):
     grouped_comparisons: list[DimensionComparison]
     metadata: dict[str, str | int | float] = Field(default_factory=dict)
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+
+
+# ---------------------------------------------------------------------------
+# Multi-memory experiment models
+# ---------------------------------------------------------------------------
+
+
+class MemoryExperimentResult(BaseModel):
+    """Experiment results for a single memory within a multi-memory run."""
+
+    memory_id: str
+    memory_title: str
+    experiment_id: str
+    ranked_cues: list[ScoreBreakdown]
+    grouped_comparisons: list[DimensionComparison]
+    metadata: dict[str, str | int | float] = Field(default_factory=dict)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+
+
+class AggregatedGroupStats(BaseModel):
+    """Cross-memory aggregated statistics for one group within a dimension."""
+
+    group_key: str
+    memory_count: int
+    total_cues: int
+    mean_avg_composite_score: float
+    max_avg_composite_score: float
+    min_avg_composite_score: float
+
+
+class AggregatedDimensionSummary(BaseModel):
+    """Cross-memory aggregated comparison for one experiment dimension."""
+
+    dimension: str
+    groups: list[AggregatedGroupStats]
+
+
+class MultiMemoryExperimentReport(BaseModel):
+    """Aggregate experiment report across all memories in a dataset run."""
+
+    run_id: str
+    memory_count: int
+    per_memory_results: list[MemoryExperimentResult]
+    aggregated_comparisons: list[AggregatedDimensionSummary]
+    dataset_metadata: dict[str, str | int | float] = Field(default_factory=dict)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))

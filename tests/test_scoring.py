@@ -40,7 +40,9 @@ def test_personalization_factor_uses_level_and_metadata() -> None:
     text_generic = next(item for item in variants if item.cue_id.endswith("text-generic"))
     text_autobio = next(item for item in variants if item.cue_id.endswith("text-autobiographical"))
 
-    assert personalization_factor(text_generic) == pytest.approx(1.02)
+    # Generic has people_used=[] and place_used=None, so factor is exactly LOW (1.00).
+    assert personalization_factor(text_generic) == pytest.approx(1.00)
+    # Autobiographical has both people and place context: HIGH (1.12) + 0.01 + 0.01 = 1.14.
     assert personalization_factor(text_autobio) == pytest.approx(1.14)
 
 

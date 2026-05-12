@@ -4,7 +4,7 @@
 
 ### Major Modules
 - `apps/api`: FastAPI app and routes
-- `apps/dashboard`: Streamlit shell
+- `apps/dashboard`: Streamlit experiment inspection dashboard
 - `apps/worker`: Celery worker entrypoint
 - `echomind/core`: settings, logging, shared utilities
 - `echomind/db`: SQLAlchemy models, schemas, sessions, enums
@@ -13,7 +13,9 @@
 - `echomind/media`: rendering contracts, deterministic renderer, swappable adapters (TTS/slideshow)
 - `echomind/tribe`: preprocessing, wrapper client, inference orchestration, aggregates, artifact persistence
 - `echomind/scoring`: explicit metrics, weighted composite assembly, explanation helpers, scoring pipeline
-- `echomind/experiments`: grouped comparison outputs, report assembly, deterministic demo comparison runner
+- `echomind/experiments`: grouped comparison outputs, report assembly, single- and multi-memory runners, cross-memory aggregation, frozen paper config (`paper_config.py`)
+- `echomind/demo_data`: reproducible synthetic 12-memory dataset definitions and loader helpers
+- `echomind/dashboard`: thin service + view-model helpers used by Streamlit UI
 
 ### Current Data Flow
 1. Memory context is loaded from persisted entities (`Memory`, `Person`, `Place`, `Asset`).
@@ -25,6 +27,8 @@
 7. Raw outputs + summary + run metadata are persisted to deterministic local artifact paths.
 8. Scoring layer computes response_strength + heuristic modality/personalization factors + composite score.
 9. Experiment layer groups ranked cues by personalization, tone, and delivery mode for comparison views.
+10. Multi-memory runner repeats steps 2–9 across all synthetic demo memories and aggregates dimension summaries.
+11. Report exporter (`scripts/export_report_artifacts.py`) reads aggregated outputs and emits paper-ready CSVs, a summary JSON keyed to the frozen `paper.v1.0` config, and simple matplotlib plots under `artifacts/report/`.
 
 ## Persistence Layer
 - SQLAlchemy 2.0 models for memory/cue/inference/score entities
@@ -34,7 +38,7 @@
 
 ## Service Roles
 - API: health + memory read endpoints for seeded and persisted entities
-- Dashboard: placeholder non-clinical inspection shell
+- Dashboard: non-clinical inspection surface for demo memory, cues, rendered artifacts, smoke inference, scoring, and grouped comparisons
 - Worker: placeholder Celery task path
 
 ## Contract Boundaries
@@ -43,6 +47,7 @@
 - Inference boundary: `StimulusManifest` -> `TribeBatchInput` -> raw outputs + `InferenceResultSummary`
 - Scoring boundary: inference outputs + cue metadata -> decomposable cue scores
 - Experiment boundary: scored cues -> grouped experiment comparison report
+- Multi-memory boundary: dataset of (request, context) pairs -> per-memory results + aggregated dimension summaries
 
 ## Architecture Decisions
 1. Deterministic planning before LLM generation:
@@ -64,4 +69,6 @@
 - replace stub TRIBE client with environment-backed real client implementation
 - expand preprocess support for narration/slideshow modalities
 - persist scoring outputs to DB-linked score records at run time
-- add richer dashboard result views and product-facing comparison APIs
+- add richer dashboard result filtering, report browsing, and product-facing comparison APIs
+- extend multi-memory runner to accept custom dataset subsets or category filters
+- add optional lightweight plotting of aggregated dimension comparisons
